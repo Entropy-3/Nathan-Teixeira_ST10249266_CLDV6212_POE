@@ -1,24 +1,114 @@
 ﻿@model CLDV_SEM2_POE.Models.CustomerProfile
 
-<form asp-action="UploadImage" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <button type="submit">Upload Image</button>
-</form>
+<style>
+    body {
+        background-color: #333333; /* Darker gray background */
+        margin: 0;
+    }
 
-<form asp-action="AddCustomerProfile" method="post">
-    <input type="text" name="FirstName" placeholder="First Name" />
-    <input type="text" name="LastName" placeholder="Last Name" />
-    <input type="email" name="Email" placeholder="Email" />
-    <input type="text" name="PhoneNumber" placeholder="Phone Number" />
-    <button type="submit">Add Profile</button>
-</form>
+    .form-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        justify-items: center;
+        align-items: center;
+        height: calc(100vh - 56px); /* Adjust height to account for the navbar */
+        gap: 20px;
+    }
 
-<form asp-action="ProcessOrder" method="post">
-    <input type="text" name="orderId" placeholder="Order ID" />
-    <button type="submit">Process Order</button>
-</form>
+    .form-container {
+        background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+        border: 1px solid #d3d3d3; /* Light gray border */
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
 
-<form asp-action="UploadContract" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <button type="submit">Upload Contract</button>
-</form>
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container input, .form-container button {
+            margin-bottom: 10px;
+        }
+
+        .form-container button {
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px; /* Rounded edges */
+        }
+
+            .form-container button:hover {
+                background-color: #45a049; /* Darker green on hover */
+            }
+
+    .form-row {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .image-preview {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        border: 1px solid #d3d3d3;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="form-wrapper">
+    <div class="form-container">
+        <form asp-action="AddCustomerProfile" method="post">
+            <input type="text" name="FirstName" placeholder="First Name" />
+            <input type="text" name="LastName" placeholder="Last Name" />
+            <input type="email" name="Email" placeholder="Email" />
+            <input type="text" name="PhoneNumber" placeholder="Phone Number" />
+            <button type="submit">Add Profile</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <form asp-action="ProcessOrder" method="post">
+            <input type="text" name="orderId" placeholder="Order ID" />
+            <button type="submit">Process Order</button>
+        </form>
+    </div>
+
+    <div class="form-row">
+        <div class="form-container">
+            <form asp-action="UploadImage" method="post" enctype="multipart/form-data">
+                <img id="imagePreview1" class="image-preview" src="#" alt="Image Preview" style="display: none;" />
+                <input type="file" name="file" onchange="previewImage(event, 'imagePreview1')" />
+                <button type="submit">Upload Image</button>
+            </form>
+        </div>
+
+        <div class="form-container">
+            <form asp-action="UploadContract" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" />
+                <button type="submit">Upload Contract</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@* github copilot assisted me with the script to allow for the user to have an image preview when uploading an image*@
+<script>
+    function previewImage(event, previewId) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById(previewId);
+            output.src = reader.result;
+            output.style.display = 'block';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

@@ -17,9 +17,12 @@ namespace CLDV_SEM2_POE.Services
             _tableClient.CreateIfNotExists();
         }
 
+        //-------------------------------------------------------------------------------------------------------\\
+        //method that adds a customer profile to the table
         public async Task AddEntityAsync(CustomerProfile profile)
         {
             await _tableClient.AddEntityAsync(profile);
         }
     }
 }
+//------------------------------------------eof-------------------------------------------------------------\\
