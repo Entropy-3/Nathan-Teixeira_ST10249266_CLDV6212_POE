@@ -10,18 +10,18 @@ namespace CLDV_SEM2_POE.Services
     public class FileService
     {
 
-        private readonly ShareServiceClient _shareServiceClient;
+        private readonly ShareServiceClient shareServiceClient;
 
         public FileService(IConfiguration configuration)
         {
-            _shareServiceClient = new ShareServiceClient(configuration["AzureStorage:ConnectionString"]);
+            shareServiceClient = new ShareServiceClient(configuration["AzureStorage:ConnectionString"]);
         }
 
         //-------------------------------------------------------------------------------------------------------\\
         //method that uploads a file to file storage
         public async Task UploadFileAsync(string shareName, string fileName, Stream content)
         {
-            var shareClient = _shareServiceClient.GetShareClient(shareName);
+            var shareClient = shareServiceClient.GetShareClient(shareName);
             await shareClient.CreateIfNotExistsAsync();
             var directoryClient = shareClient.GetRootDirectoryClient();
             var fileClient = directoryClient.GetFileClient(fileName);
