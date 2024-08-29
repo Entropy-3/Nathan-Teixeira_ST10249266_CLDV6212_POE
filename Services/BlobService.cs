@@ -14,12 +14,15 @@ namespace CLDV_SEM2_POE.Services
             _blobServiceClient = new BlobServiceClient(configuration["AzureStorage:ConnectionString"]);
         }
 
+        //-------------------------------------------------------------------------------------------------------\\
+        //method that uploads an image to blob storage
         public async Task UploadBlobAsync(string containerName, string blobName, Stream content)
         {
             var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
             await containerClient.CreateIfNotExistsAsync();
             var blobClient = containerClient.GetBlobClient(blobName);
-
+            await blobClient.UploadAsync(content, true);
         }
     }
 }
+//------------------------------------------eof-------------------------------------------------------------\\

@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Azure.Data.Tables;
+using CLDV_SEM2_POE.Models;
 using System.Threading.Tasks;
 
 namespace CLDV_SEM2_POE.Services
